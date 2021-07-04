@@ -1,7 +1,8 @@
 //requiring the inquier npm package
 const inquirer = require('inquirer');
+const departmentdbLogic = require('./routes/apiRoutes/departmentDbLogic')
 
-company = []
+
 
   const chooseOption = () => {
     console.log(`
@@ -15,25 +16,28 @@ company = []
         message: 'What would you like to do?',
         choices: [ 'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'quit']
     }]) .then(answer => {
-        if (answer.employeeChoice === 'view all departments') {
+        if (answer.companyChoice === 'view all departments') {
             functionhere();
         }
-        else if (answer.employeeChoice === 'view all roles') {
+        else if (answer.companyChoice === 'view all roles') {
             functionhere();
         }
-        else if (answer.employeeChoice === 'view all employees') {
+        else if (answer.companyChoice === 'view all employees') {
             functionhere();
         }
-        else if (answer.employeeChoice === 'add a department') {
+        else if (answer.companyChoice === 'add a department') {
             addDepartment();
         }
-        else if (answer.employeeChoice === 'add a role') {
+        else if (answer.companyChoice === 'delete a department') {
+            deleteDepartment();
+        }
+        else if (answer.companyChoice === 'add a role') {
             addRole();
         }
-        else if (answer.employeeChoice === 'add an employee') {
+        else if (answer.companyChoice === 'add an employee') {
             addEmployee();
         }
-        else if (answer.employeeChoice === 'update an employee role') {
+        else if (answer.companyChoice === 'update an employee role') {
             updateEmployee();
         }
         else {
@@ -66,9 +70,40 @@ company = []
       }
     ])
     .then(answer => {
-        const department = new Department (answer.departmentName)
-        company.push(department)
-        chooseType()
-      });
+      return departmentdbLogic.addDepartment(answer.departmentName)
+        
+      })
+      .then(()=> chooseOption());
     
   };
+  const deleteDepartment = () => {
+    console.log(`
+  =================
+  Delete a Department
+  =================
+  `);
+
+    return inquirer.prompt([
+      {
+        type: 'input',
+        name: 'departmentId',
+        message: 'What is the id of the department? (Required)',
+        validate: nameInput => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log('You need to enter an id!');
+            return false;
+          }
+        }
+      }
+    ])
+    .then(answer => {
+      return departmentdbLogic.deleteDepartment(answer.departmentId)
+        
+      })
+      .then(()=> chooseOption());
+    
+  };
+
+  chooseOption();
