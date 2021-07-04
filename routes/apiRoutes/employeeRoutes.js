@@ -19,23 +19,6 @@ router.get('/empolyee', (req, res) => {
   });
 });
 
-// Get single employee
-router.get('/employee/:id', (req, res) => {
-  const sql = `SELECT * FROM employee WHERE id = ?`;
-  const params = [req.params.id];
-
-  db.query(sql, params, (err, row) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: row
-    });
-  });
-});
-
 // Create an employee
 router.post('/employee', ({ body }, res) => {
   const errors = inputCheck(body,  'first_name', 'last_name', 'role_id', 'manager_id');

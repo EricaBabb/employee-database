@@ -19,23 +19,6 @@ router.get('/role', (req, res) => {
   });
 });
 
-// Get a single role
-router.get('/role/:id', (req, res) => {
-  const sql = `SELECT * FROM role WHERE id = ?`;
-  const params = [req.params.id];
-
-  db.query(sql, params, (err, row) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: row
-    });
-  });
-});
-
 // Create a new role
 router.post('/role', ({ body }, res) => {
   const errors = inputCheck(body, 'title', 'salary', 'department_id');
