@@ -19,7 +19,7 @@ INSERT INTO employee
 VALUES
   (1,'Jamie', 'Fraser', 1, 4),
   (2, 'Jackie', 'London', 2, 4),
-  (2, 'Roberta', 'Bruce', 3, 4),
+  (3, 'Roberta', 'Bruce', 3, 4),
   (4, 'Gerald', 'Griffin', 4, 4);
 
 --   How do I connect manager id??
