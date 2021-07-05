@@ -17,13 +17,19 @@ const roledbLogic = require('./Logic/DbLogic/roleDbLogic')
         choices: [ 'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'quit']
     }]) .then(answer => {
         if (answer.companyChoice === 'view all departments') {
-            readDepartment();
+            readDepartment().then(departments => {
+               return console.table(departments)
+            }).then(() => chooseOption())
         }
         else if (answer.companyChoice === 'view all roles') {
-            readRole();
+            readRole().then(roles => {
+                return console.table(roles)
+             }).then(() => chooseOption())
         }
         else if (answer.companyChoice === 'view all employees') {
-            readEmployee();
+            readEmployee().then(employees => {
+                return console.table(employees)
+             }).then(() => chooseOption())
         }
         else if (answer.companyChoice === 'add a department') {
             addDepartment();
@@ -73,7 +79,11 @@ const roledbLogic = require('./Logic/DbLogic/roleDbLogic')
       return departmentdbLogic.addDepartment(answer.departmentName)
         
       })
-      .then(()=> chooseOption());
+      .then((result)=> {
+        console.log(result)  
+        chooseOption()
+    
+    });
     
   };
   const addRole = () => {
@@ -128,10 +138,14 @@ const roledbLogic = require('./Logic/DbLogic/roleDbLogic')
     .then(answer => {
       return roledbLogic.addRole(answer.roleTitle, answer.roleSalary, answer.departmentId)
         
-      })
-      .then(()=> chooseOption());
-    
-  };
+    })
+    .then((result)=> {
+      console.log(result)  
+      chooseOption()
+  
+  });
+  
+};
   const addEmployee = () => {
     console.log(`
   =================
@@ -197,10 +211,14 @@ const roledbLogic = require('./Logic/DbLogic/roleDbLogic')
     .then(answer => {
       return employeedbLogic.addEmployee(answer.firstName, answer.lastName, answer.roleId, answer.departmentId)
         
-      })
-      .then(()=> chooseOption());
-    
-  };
+    })
+    .then((result)=> {
+      console.log(result)  
+      chooseOption()
+  
+  });
+  
+};
   const updateEmployee = () => {
     console.log(`
   =================
@@ -240,39 +258,13 @@ const roledbLogic = require('./Logic/DbLogic/roleDbLogic')
     .then(answer => {
       return employeedbLogic.updateEmployee(answer.roleId, answer.employeeId)
         
-      })
-      .then(()=> chooseOption());
-    
-  };
-//   const deleteDepartment = () => {
-//     console.log(`
-//   =================
-//   Delete a Department
-//   =================
-//   `);
-
-//     return inquirer.prompt([
-//       {
-//         type: 'number',
-//         name: 'departmentId',
-//         message: 'What is the id of the department? (Required)',
-//         validate: nameInput => {
-//           if (nameInput) {
-//             return true;
-//           } else {
-//             console.log('You need to enter an id!');
-//             return false;
-//           }
-//         }
-//       }
-//     ])
-//     .then(answer => {
-//       return departmentdbLogic.deleteDepartment(answer.departmentId)
-        
-//       })
-//       .then(()=> chooseOption());
-    
-//   };
-
+    })
+    .then((result)=> {
+      console.log(result)  
+      chooseOption()
+  
+  });
+  
+};
 
   chooseOption();

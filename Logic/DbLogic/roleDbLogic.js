@@ -11,7 +11,7 @@ readRole = () => {
 addRole = (title, salary, department_id) => {
   const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
 
-  return db.query(sql, title, salary, department_id);
+  return db.query(sql, [title, salary, department_id]);
 }
 
 // Delete a role
